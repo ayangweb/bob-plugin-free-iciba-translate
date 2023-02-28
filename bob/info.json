@@ -1,0 +1,12 @@
+{
+  "identifier": "com.bob-plugin-free-iciba-translate",
+  "version": "0.0.1",
+  "category": "translate",
+  "name": "爱词霸翻译",
+  "summary": "免token调用爱词霸翻译",
+  "icon": "118",
+  "author": "ayang",
+  "homepage": "https://github.com/bilibili-ayang/bob-plugin-free-iciba-translate",
+  "appcast": "https://raw.githubusercontent.com/bilibili-ayang/bob-plugin-free-iciba-translate/master/appcast.json",
+  "minBobVersion": "0.5.0"
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "com.bob-plugin-free-iciba-translate",
+  "versions": [
+    {
+      "version": "0.0.1",
+      "desc": "初始版本",
+      "sha256": "aa8c119d49d009c47eaa1bc7a76556b2583e16ddfc5a439c2aef78f8b03577a0",
+      "url": "https://github.com/bilibili-ayang/bob-plugin-free-iciba-translate/releases/download/v0.0.1/bob-plugin-free-iciba-translate.bobplugin",
+      "minBobVersion": "0.5.0"
+    }
+  ]
+}
