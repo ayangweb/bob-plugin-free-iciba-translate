@@ -32,7 +32,7 @@ app.listen("5678", () => {
 
 // 翻译 api
 router.post("/translate", async (ctx) => {
-	// body 传 q(所译文本) 、from(所译语言)、 to(目标语言，查看 bob 文件夹可得知)
+	// body 传 q(所译文本) 、from(所译语言)、 to(目标语言)
 	const { body } = ctx.request;
 
 	const sign = Crypto.createHash("md5")
@@ -58,7 +58,13 @@ router.post("/translate", async (ctx) => {
 		}
 	);
 
-	if (data?.error_code) return;
+	const { error_code, message, content } = data;
 
-	ctx.body = data.content.out;
+	if (error_code) {
+		ctx.body = message;
+
+		return;
+	}
+
+	ctx.body = content.out;
 });
