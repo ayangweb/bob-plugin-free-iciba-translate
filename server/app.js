@@ -11,7 +11,7 @@ const KoaRouter = require("koa-router");
 const axios = require("axios");
 
 // 引入加密库
-const Crypto = require("crypto");
+const CryptoJS = require("crypto-js");
 
 // 创建服务器实例
 const app = new Koa();
@@ -30,26 +30,52 @@ app.listen("5678", () => {
 	console.log("端口号为 5678 的服务器已经启动！");
 });
 
+const getSign = (q) => {
+	q = "6key_web_new_fanyi" + "6dVjYLFyzfkFkk" + q;
+
+	const text = CryptoJS.MD5(q).toString().substring(0, 16);
+
+	const message = CryptoJS.enc.Utf8.parse(text);
+
+	const key = CryptoJS.enc.Utf8.parse("L4fBtD5fLC9FQw22");
+
+	const result = CryptoJS.AES.encrypt(message, key, {
+		mode: CryptoJS.mode.ECB,
+		padding: CryptoJS.pad.Pkcs7,
+	}).toString();
+
+	return encodeURIComponent(result);
+};
+
+const decryptContent = (content) => {
+	const ciphertext = CryptoJS.enc.Base64.parse(content);
+
+	const key = CryptoJS.enc.Utf8.parse("aahc3TfyfCEmER33");
+
+	const result = CryptoJS.AES.decrypt({ ciphertext }, key, {
+		mode: CryptoJS.mode.ECB,
+		padding: CryptoJS.pad.Pkcs7,
+	});
+
+	return JSON.parse(CryptoJS.enc.Utf8.stringify(result));
+};
+
 // 翻译 api
 router.post("/translate", async (ctx) => {
 	// body 传 q(所译文本) 、from(所译语言)、 to(目标语言)
 	const { body } = ctx.request;
 
-	const sign = Crypto.createHash("md5")
-		.update("6key_web_fanyiifanyiweb8hc9s98e" + body.q.trim())
-		.digest("hex")
-		.toString()
-		.substring(0, 16);
+	const sign = getSign(body.q);
 
 	const { data } = await axios.post(
-		"http://ifanyi.iciba.com/index.php",
+		"https://ifanyi.iciba.com/index.php",
 		body,
 		{
 			params: {
 				c: "trans",
 				m: "fy",
-				client: 6,
-				auth_user: "key_web_fanyi",
+				client: "6",
+				auth_user: "key_web_new_fanyi",
 				sign,
 			},
 			headers: {
@@ -58,13 +84,15 @@ router.post("/translate", async (ctx) => {
 		}
 	);
 
-	const { error_code, message, content } = data;
+	const { status, message, content } = data;
 
-	if (error_code) {
-		ctx.body = message;
+	if (status !== 1) {
+		ctx.body = message ?? content;
 
 		return;
 	}
 
-	ctx.body = content.out;
+	const { out } = decryptContent(content);
+
+	ctx.body = out;
 });
