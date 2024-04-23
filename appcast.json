@@ -2,6 +2,13 @@
   "identifier": "com.bob-plugin-free-iciba-translate",
   "versions": [
     {
+      "version": "0.0.4",
+      "desc": "https://github.com/bilibili-ayang/bob-plugin-free-iciba-translate/blob/master/CHANGELOG.md",
+      "sha256": "abc1bad10f816cfe877dd9cd1abd0618954f4f98d4a355a117acf402dc94367c",
+      "url": "https://github.com/bilibili-ayang/bob-plugin-free-iciba-translate/releases/download/v0.0.4/bob-plugin-free-iciba-translate.bobplugin",
+      "minBobVersion": "0.5.0"
+    },
+    {
       "version": "0.0.3",
       "desc": "https://github.com/bilibili-ayang/bob-plugin-free-iciba-translate/blob/master/CHANGELOG.md",
       "sha256": "3190c58dae5a9a20dc174639155493fb0a14d7e9caf74ffe2427cb907422bd35",
